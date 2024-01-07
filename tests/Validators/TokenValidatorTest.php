@@ -8,10 +8,12 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfTest\Validators;
 
 use HyperfExt\Jwt\Contracts\TokenValidatorInterface;
 use HyperfExt\Jwt\Exceptions\TokenInvalidException;
+use HyperfExt\Jwt\Validators\TokenValidator;
 use HyperfTest\AbstractTestCase;
 
 /**
@@ -21,7 +23,7 @@ use HyperfTest\AbstractTestCase;
 class TokenValidatorTest extends AbstractTestCase
 {
     /**
-     * @var \HyperfExt\Jwt\Validators\TokenValidator
+     * @var TokenValidator
      */
     protected $validator;
 

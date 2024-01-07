@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfTest\Claims;
 
 use Hyperf\HttpMessage\Server\Request;
@@ -30,7 +31,7 @@ use Psr\Http\Message\ServerRequestInterface;
 class FactoryTest extends AbstractTestCase
 {
     /**
-     * @var \HyperfExt\Jwt\Claims\Factory
+     * @var Factory
      */
     protected $factory;
 

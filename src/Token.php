@@ -8,9 +8,10 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt;
 
-use Hyperf\Utils\ApplicationContext;
+use Hyperf\Context\ApplicationContext;
 use HyperfExt\Jwt\Contracts\TokenValidatorInterface;
 
 class Token
@@ -21,7 +22,7 @@ class Token
     private $value;
 
     /**
-     * @var \HyperfExt\Jwt\Contracts\TokenValidatorInterface
+     * @var TokenValidatorInterface
      */
     private $validator;
 
@@ -30,7 +31,7 @@ class Token
      */
     public function __construct(string $value)
     {
-        $this->validator = ApplicationContext::getContainer()->get(TokenValidatorInterface::class);
+        $this->validator = \Hyperf\Context\ApplicationContext::getContainer()->get(TokenValidatorInterface::class);
         $this->value = (string) $this->validator->check($value);
     }
 

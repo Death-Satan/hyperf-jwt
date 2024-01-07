@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfTest;
 
 use HyperfExt\Jwt\Token;
@@ -19,7 +20,7 @@ use HyperfExt\Jwt\Token;
 class TokenTest extends AbstractTestCase
 {
     /**
-     * @var \HyperfExt\Jwt\Token
+     * @var Token
      */
     protected $token;
 

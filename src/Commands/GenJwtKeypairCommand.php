@@ -8,15 +8,16 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\Commands;
 
 use Hyperf\Utils\Str;
 
 class GenJwtKeypairCommand extends AbstractGenCommand
 {
-    protected $name = 'gen:jwt-keypair';
+    protected ?string $name = 'gen:jwt-keypair';
 
-    protected $description = 'Set the JWT private key and public key used to sign the tokens';
+    protected string $description = 'Set the JWT private key and public key used to sign the tokens';
 
     protected $configs = [
         'RS256' => ['private_key_type' => OPENSSL_KEYTYPE_RSA, 'digest_alg' => 'SHA256', 'private_key_bits' => 4096],
@@ -48,7 +49,7 @@ class GenJwtKeypairCommand extends AbstractGenCommand
             return;
         }
 
-        if (Str::contains(file_get_contents($path), ['JWT_PRIVATE_KEY', 'JWT_PUBLIC_KEY', 'JWT_PASSPHRASE'])) {
+        if (\Hyperf\Stringable\Str::contains(file_get_contents($path), ['JWT_PRIVATE_KEY', 'JWT_PUBLIC_KEY', 'JWT_PASSPHRASE'])) {
             if ($this->getOption('always-no')) {
                 $this->comment('The key pair or some part of it already exists. Skipping...');
                 return;
@@ -73,10 +74,10 @@ class GenJwtKeypairCommand extends AbstractGenCommand
 
     protected function writeEnv(string $path, string $name, ?string $value, bool $force)
     {
-        $envKey = 'JWT_' . Str::upper(Str::snake($name));
+        $envKey = 'JWT_' . \Hyperf\Stringable\Str::upper(\Hyperf\Stringable\Str::snake($name));
         $envValue = empty($value) ? '(null)' : '"' . str_replace("\n", '\\n', $value) . '"';
 
-        if (Str::contains(file_get_contents($path), $envKey) === false) {
+        if (\Hyperf\Stringable\Str::contains(file_get_contents($path), $envKey) === false) {
             file_put_contents($path, "{$envKey}={$envValue}\n", FILE_APPEND);
         } elseif ($force) {
             file_put_contents($path, preg_replace(

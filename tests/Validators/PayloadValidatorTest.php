@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfTest\Validators;
 
 use HyperfExt\Jwt\Claims\Collection;
@@ -21,6 +22,7 @@ use HyperfExt\Jwt\Contracts\PayloadValidatorInterface;
 use HyperfExt\Jwt\Exceptions\InvalidClaimException;
 use HyperfExt\Jwt\Exceptions\TokenExpiredException;
 use HyperfExt\Jwt\Exceptions\TokenInvalidException;
+use HyperfExt\Jwt\Validators\PayloadValidator;
 use HyperfTest\AbstractTestCase;
 
 /**
@@ -30,7 +32,7 @@ use HyperfTest\AbstractTestCase;
 class PayloadValidatorTest extends AbstractTestCase
 {
     /**
-     * @var \HyperfExt\Jwt\Validators\PayloadValidator
+     * @var PayloadValidator
      */
     protected $validator;
 

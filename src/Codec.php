@@ -8,9 +8,9 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt;
 
-use Exception;
 use Hyperf\Utils\Arr;
 use Hyperf\Utils\Collection;
 use HyperfExt\Jwt\Contracts\CodecInterface;
@@ -88,21 +88,21 @@ class Codec implements CodecInterface
     /**
      * The Configuration instance.
      *
-     * @var \Lcobucci\JWT\Configuration
+     * @var Configuration
      */
     protected $config;
 
     /**
      * The Signer instance.
      *
-     * @var \Lcobucci\JWT\Signer
+     * @var Signer
      */
     protected $signer;
 
     /**
      * @param null|\Lcobucci\JWT\Configuration $config
      *
-     * @throws \HyperfExt\Jwt\Exceptions\JwtException
+     * @throws JwtException
      */
     public function __construct(string $secret, string $algo, array $keys, $config = null)
     {
@@ -198,7 +198,7 @@ class Codec implements CodecInterface
      */
     public function getPublicKey()
     {
-        return Arr::get($this->keys, 'public');
+        return \Hyperf\Collection\Arr::get($this->keys, 'public');
     }
 
     /**
@@ -209,7 +209,7 @@ class Codec implements CodecInterface
      */
     public function getPrivateKey()
     {
-        return Arr::get($this->keys, 'private');
+        return \Hyperf\Collection\Arr::get($this->keys, 'private');
     }
 
     /**
@@ -218,13 +218,13 @@ class Codec implements CodecInterface
      */
     public function getPassphrase(): ?string
     {
-        return Arr::get($this->keys, 'passphrase');
+        return \Hyperf\Collection\Arr::get($this->keys, 'passphrase');
     }
 
     /**
      * Create a JSON Web Token.
      *
-     * @throws \HyperfExt\Jwt\Exceptions\JwtException
+     * @throws JwtException
      */
     public function encode(array $payload): string
     {
@@ -235,7 +235,7 @@ class Codec implements CodecInterface
                 $this->addClaim($builder, $key, $value);
             }
             return $builder->getToken($this->config->signer(), $this->config->signingKey())->toString();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new JwtException('Could not create token: ' . $e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -243,7 +243,7 @@ class Codec implements CodecInterface
     /**
      * Decode a JSON Web Token.
      *
-     * @throws \HyperfExt\Jwt\Exceptions\JwtException
+     * @throws JwtException
      */
     public function decode(string $token): array
     {
@@ -251,14 +251,14 @@ class Codec implements CodecInterface
 
         try {
             $jwt = $parser->parse($token);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new TokenInvalidException('Could not decode token: ' . $e->getMessage(), $e->getCode(), $e);
         }
 
         if (! $this->config->validator()->validate($jwt, ...$this->config->validationConstraints())) {
             throw new TokenInvalidException('Token Signature could not be verified.');
         }
-        return (new Collection($jwt->claims()->all()))->map(function ($claim) {
+        return (new \Hyperf\Collection\Collection($jwt->claims()->all()))->map(function ($claim) {
             if (is_a($claim, \DateTimeImmutable::class)) {
                 return $claim->getTimestamp();
             }
@@ -273,7 +273,7 @@ class Codec implements CodecInterface
     /**
      * Gets the {@see $config} attribute.
      *
-     * @return \Lcobucci\JWT\Configuration
+     * @return Configuration
      */
     public function getConfig()
     {
@@ -317,7 +317,7 @@ class Codec implements CodecInterface
     /**
      * Get the signer instance.
      *
-     * @throws \HyperfExt\Jwt\Exceptions\JwtException
+     * @throws JwtException
      */
     protected function getSigner(): Signer
     {

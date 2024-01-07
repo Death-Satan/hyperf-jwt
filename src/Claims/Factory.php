@@ -8,9 +8,10 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\Claims;
 
-use Hyperf\Utils\ApplicationContext;
+use Hyperf\Context\ApplicationContext;
 use Hyperf\Utils\Str;
 use HyperfExt\Jwt\Contracts\ClaimInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -68,7 +69,7 @@ class Factory
     public function get(string $name, $value): ClaimInterface
     {
         if ($this->has($name)) {
-            $claim = make($this->classMap[$name], ['factory' => $this, 'value' => $value]);
+            $claim = \Hyperf\Support\make($this->classMap[$name], ['factory' => $this, 'value' => $value]);
 
             return method_exists($claim, 'setLeeway') ?
                 $claim->setLeeway($this->leeway) :
@@ -160,7 +161,7 @@ class Factory
 
     public function iss(): string
     {
-        return ApplicationContext::getContainer()->get(ServerRequestInterface::class)->url();
+        return \Hyperf\Context\ApplicationContext::getContainer()->get(ServerRequestInterface::class)->url();
     }
 
     public function iat(): int
@@ -180,6 +181,6 @@ class Factory
 
     public function jti(): string
     {
-        return Str::random(16);
+        return \Hyperf\Stringable\Str::random(16);
     }
 }

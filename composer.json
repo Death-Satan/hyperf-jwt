@@ -1,5 +1,5 @@
 {
-    "name": "hyperf-ext/jwt",
+    "name": "death_satan/hyperf-jwt",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -19,6 +19,10 @@
             "email": "tymon148@gmail.com",
             "homepage": "https://tymon.xyz",
             "role": "Developer"
+        },{
+            "name": "Death Satan",
+            "email": "2771717608@qq.com",
+            "role": "Developer"
         }
     ],
     "autoload": {
@@ -32,24 +36,25 @@
         }
     },
     "require": {
-        "php": ">=7.3",
-        "ext-swoole": ">=4.5",
+        "php": ">=8.1",
+        "ext-swoole": ">=5.0",
         "ext-json": "*",
         "ext-openssl": "*",
-        "hyperf/cache": "^2.1",
-        "hyperf/command": "^2.1",
-        "hyperf/config": "^2.1",
-        "hyperf/di": "^2.1",
-        "hyperf/framework": "^2.1",
-        "lcobucci/jwt": "~4.1.0",
+        "hyperf/cache": "^3.1",
+        "hyperf/command": "^3.1",
+        "hyperf/config": "^3.1",
+        "hyperf/di": "^3.1",
+        "hyperf/framework": "^3.1",
+        "lcobucci/jwt": "^5.2",
         "nesbot/carbon": "^2.0"
     },
     "require-dev": {
+        "friendsofhyperf/rector": "^0.1.5",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "hyperf/testing": "^2.1",
-        "phpstan/phpstan": "^0.12",
-        "swoole/ide-helper": "dev-master",
-        "mockery/mockery": "^1.0"
+        "hyperf/testing": "^3.1",
+        "mockery/mockery": "^1.0",
+        "phpstan/phpstan": "^1.0",
+        "swoole/ide-helper": "dev-master"
     },
     "config": {
         "sort-packages": true

@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfTest;
 
 use HyperfExt\Jwt\Blacklist;
@@ -20,7 +21,6 @@ use HyperfExt\Jwt\Claims\NotBefore;
 use HyperfExt\Jwt\Claims\Subject;
 use HyperfExt\Jwt\Contracts\StorageInterface;
 use HyperfExt\Jwt\Payload;
-use Mockery;
 
 /**
  * @internal
@@ -34,7 +34,7 @@ class BlacklistTest extends AbstractTestCase
     protected $storage;
 
     /**
-     * @var \HyperfExt\Jwt\Blacklist
+     * @var Blacklist
      */
     protected $blacklist;
 
@@ -42,7 +42,7 @@ class BlacklistTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->storage = Mockery::mock(StorageInterface::class);
+        $this->storage = \Mockery::mock(StorageInterface::class);
         $this->blacklist = new Blacklist($this->storage, 0, 3600 * 24 * 14);
     }
 

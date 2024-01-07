@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\RequestParser\Handlers;
 
 use HyperfExt\Jwt\Contracts\RequestParser\HandlerInterface as ParserContract;
@@ -19,7 +20,7 @@ class InputSource implements ParserContract
 
     public function parse(ServerRequestInterface $request): ?string
     {
-        $data = data_get(
+        $data = \Hyperf\Collection\data_get(
             is_array($data = $request->getParsedBody()) ? $data : [],
             $this->key
         );

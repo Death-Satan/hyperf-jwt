@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt;
 
 use HyperfExt\Jwt\Contracts\StorageInterface;
@@ -17,7 +18,7 @@ class Blacklist
     /**
      * The storage.
      *
-     * @var \HyperfExt\Jwt\Contracts\StorageInterface
+     * @var StorageInterface
      */
     protected $storage;
 
@@ -158,7 +159,7 @@ class Blacklist
      */
     public function setKey(string $key)
     {
-        $this->key = value($key);
+        $this->key = \Hyperf\Support\value($key);
 
         return $this;
     }

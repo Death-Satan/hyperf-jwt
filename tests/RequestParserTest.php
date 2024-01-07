@@ -8,13 +8,14 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfTest;
 
 use FastRoute\Dispatcher;
 use Hyperf\HttpMessage\Server\Request;
 use Hyperf\HttpServer\Request as HttpServerRequest;
 use Hyperf\HttpServer\Router\Dispatched;
-use Hyperf\Utils\Context;
+use Hyperf\Context\Context;
 use HyperfExt\Jwt\RequestParser\Handlers\AuthHeaders;
 use HyperfExt\Jwt\RequestParser\Handlers\Cookies;
 use HyperfExt\Jwt\RequestParser\Handlers\InputSource;

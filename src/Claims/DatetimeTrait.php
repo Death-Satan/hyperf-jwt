@@ -8,10 +8,9 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\Claims;
 
-use DateInterval;
-use DateTimeInterface;
 use HyperfExt\Jwt\Exceptions\InvalidClaimException;
 use HyperfExt\Jwt\Utils;
 
@@ -29,26 +28,22 @@ trait DatetimeTrait
      *
      * @param mixed $value
      *
-     * @throws \HyperfExt\Jwt\Exceptions\InvalidClaimException
-     *
      * @return $this
+     * @throws InvalidClaimException
      */
     public function setValue($value)
     {
-        if ($value instanceof DateInterval) {
+        if ($value instanceof \DateInterval) {
             $value = Utils::now()->add($value);
         }
 
-        if ($value instanceof DateTimeInterface) {
+        if ($value instanceof \DateTimeInterface) {
             $value = $value->getTimestamp();
         }
 
         return parent::setValue($value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateCreate($value)
     {
         if (! is_numeric($value)) {

@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfTest;
 
 use HyperfExt\Jwt\Claims\Audience;
@@ -29,7 +30,7 @@ use HyperfExt\Jwt\Payload;
 class PayloadTest extends AbstractTestCase
 {
     /**
-     * @var \HyperfExt\Jwt\Payload
+     * @var Payload
      */
     protected $payload;
 
@@ -218,7 +219,7 @@ class PayloadTest extends AbstractTestCase
     }
 
     /**
-     * @return \HyperfExt\Jwt\Payload
+     * @return Payload
      */
     private function getTestPayload(array $extraClaims = [])
     {

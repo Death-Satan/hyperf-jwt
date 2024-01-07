@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\RequestParser;
 
 use HyperfExt\Jwt\Contracts\RequestParser\RequestParserInterface;

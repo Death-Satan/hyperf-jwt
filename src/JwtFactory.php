@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt;
 
 use Hyperf\Contract\ConfigInterface;
@@ -24,6 +25,6 @@ class JwtFactory implements JwtFactoryInterface
 
     public function make(): Jwt
     {
-        return make(Jwt::class)->setLockSubject($this->lockSubject);
+        return \Hyperf\Support\make(Jwt::class)->setLockSubject($this->lockSubject);
     }
 }

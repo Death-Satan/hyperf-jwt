@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\RequestParser;
 
 use HyperfExt\Jwt\RequestParser\Handlers\AuthHeaders;
@@ -20,7 +21,7 @@ class RequestParserFactory
 {
     public function __invoke()
     {
-        return make(RequestParser::class)->setHandlers([
+        return \Hyperf\Support\make(RequestParser::class)->setHandlers([
             new AuthHeaders(),
             new QueryString(),
             new InputSource(),

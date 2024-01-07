@@ -8,12 +8,12 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfTest\Storage;
 
 use Hyperf\Cache\Cache;
 use HyperfExt\Jwt\Storage\HyperfCache;
 use HyperfTest\AbstractTestCase;
-use Mockery;
 
 /**
  * @internal
@@ -27,7 +27,7 @@ class HyperfCacheTest extends AbstractTestCase
     protected $cache;
 
     /**
-     * @var \HyperfExt\Jwt\Storage\HyperfCache
+     * @var HyperfCache
      */
     protected $storage;
 
@@ -40,7 +40,7 @@ class HyperfCacheTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->cache = Mockery::mock(Cache::class);
+        $this->cache = \Mockery::mock(Cache::class);
         $this->tag = 'jwt.default';
         $this->storage = new HyperfCache($this->cache, $this->tag);
     }

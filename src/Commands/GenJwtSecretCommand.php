@@ -8,15 +8,16 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\Commands;
 
 use Hyperf\Utils\Str;
 
 class GenJwtSecretCommand extends AbstractGenCommand
 {
-    protected $name = 'gen:jwt-secret';
+    protected ?string $name = 'gen:jwt-secret';
 
-    protected $description = 'Set the JWT secret key used to sign the tokens';
+    protected string $description = 'Set the JWT secret key used to sign the tokens';
 
     public function handle()
     {
@@ -32,7 +33,7 @@ class GenJwtSecretCommand extends AbstractGenCommand
             return;
         }
 
-        if (Str::contains(file_get_contents($path), 'JWT_SECRET') === false) {
+        if (\Hyperf\Stringable\Str::contains(file_get_contents($path), 'JWT_SECRET') === false) {
             file_put_contents($path, "\nJWT_SECRET={$key}\n", FILE_APPEND);
         } else {
             if ($this->getOption('always-no')) {

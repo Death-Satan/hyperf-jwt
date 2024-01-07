@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\Storage;
 
 use HyperfExt\Jwt\Contracts\StorageInterface;
@@ -18,7 +19,7 @@ class HyperfCache implements StorageInterface
     /**
      * The cache repository contract.
      *
-     * @var \Psr\SimpleCache\CacheInterface
+     * @var CacheInterface
      */
     protected $cache;
 

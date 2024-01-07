@@ -8,7 +8,10 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\Contracts;
+
+use HyperfExt\Jwt\Exceptions\InvalidClaimException;
 
 interface ClaimInterface
 {
@@ -17,9 +20,8 @@ interface ClaimInterface
      *
      * @param mixed $value
      *
-     * @throws \HyperfExt\Jwt\Exceptions\InvalidClaimException
-     *
      * @return $this
+     * @throws InvalidClaimException
      */
     public function setValue($value);
 

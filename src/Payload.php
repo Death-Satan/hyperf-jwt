@@ -8,32 +8,30 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt;
 
-use ArrayAccess;
-use BadMethodCallException;
-use Countable;
-use Hyperf\Utils\ApplicationContext;
-use Hyperf\Utils\Arr;
-use Hyperf\Utils\Contracts\Arrayable;
-use Hyperf\Utils\Contracts\Jsonable;
+use Hyperf\Context\ApplicationContext;
+use Hyperf\Collection\Arr;
+use Hyperf\Contract\Arrayable;
+use Hyperf\Contract\Jsonable;
 use HyperfExt\Jwt\Claims\AbstractClaim;
 use HyperfExt\Jwt\Claims\Collection;
 use HyperfExt\Jwt\Contracts\PayloadValidatorInterface;
 use HyperfExt\Jwt\Exceptions\PayloadException;
-use JsonSerializable;
+use function Hyperf\Support\value;
 
-class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerializable
+class Payload implements \ArrayAccess, \Hyperf\Contract\Arrayable, \Countable, \Hyperf\Contract\Jsonable, \JsonSerializable
 {
     /**
      * The collection of claims.
      *
-     * @var \HyperfExt\Jwt\Claims\Collection
+     * @var Collection
      */
     private $claims;
 
     /**
-     * @var \HyperfExt\Jwt\Contracts\PayloadValidatorInterface
+     * @var PayloadValidatorInterface
      */
     private $validator;
 
@@ -42,7 +40,7 @@ class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerial
      */
     public function __construct(Collection $claims, bool $ignoreExpired = false)
     {
-        $this->validator = ApplicationContext::getContainer()->get(PayloadValidatorInterface::class);
+        $this->validator = \Hyperf\Context\ApplicationContext::getContainer()->get(PayloadValidatorInterface::class);
         $this->claims = $this->validator->check($claims, $ignoreExpired);
     }
 
@@ -69,8 +67,8 @@ class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerial
     /**
      * Magically get a claim value.
      *
-     * @throws \BadMethodCallException
      * @return mixed
+     * @throws \BadMethodCallException
      */
     public function __call(string $method, array $parameters)
     {
@@ -82,7 +80,7 @@ class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerial
             }
         }
 
-        throw new BadMethodCallException(sprintf('The claim [%s] does not exist on the payload.', $method));
+        throw new \BadMethodCallException(sprintf('The claim [%s] does not exist on the payload.', $method));
     }
 
     /**
@@ -208,7 +206,7 @@ class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerial
      *
      * @return mixed
      */
-    public function offsetGet($key)
+    public function offsetGet($key): mixed
     {
         return Arr::get($this->toArray(), $key);
     }
@@ -219,9 +217,9 @@ class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerial
      * @param mixed $key
      * @param mixed $value
      *
-     * @throws \HyperfExt\Jwt\Exceptions\PayloadException
+     * @throws PayloadException
      */
-    public function offsetSet($key, $value)
+    public function offsetSet(mixed $key,mixed $value): void
     {
         throw new PayloadException('The payload is immutable');
     }
@@ -231,9 +229,9 @@ class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerial
      *
      * @param string $key
      *
-     * @throws \HyperfExt\Jwt\Exceptions\PayloadException
+     * @throws PayloadException
      */
-    public function offsetUnset($key)
+    public function offsetUnset(mixed $key): void
     {
         throw new PayloadException('The payload is immutable');
     }

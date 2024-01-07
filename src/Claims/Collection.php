@@ -8,11 +8,10 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\Claims;
 
-use Hyperf\Utils\Collection as HyperfCollection;
-
-class Collection extends HyperfCollection
+class Collection extends \Hyperf\Collection\Collection
 {
     /**
      * Create a new collection.
@@ -56,7 +55,7 @@ class Collection extends HyperfCollection
      */
     public function hasAllClaims($claims): bool
     {
-        return count($claims) and (new static($claims))->diff($this->keys())->isEmpty();
+        return count($claims) and (new self($claims))->diff($this->keys())->isEmpty();
     }
 
     /**
@@ -69,9 +68,6 @@ class Collection extends HyperfCollection
         })->toArray();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getArrayableItems($items): array
     {
         return $this->sanitizeClaims($items);

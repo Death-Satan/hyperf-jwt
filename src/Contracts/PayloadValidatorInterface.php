@@ -8,16 +8,19 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\Contracts;
 
 use HyperfExt\Jwt\Claims\Collection;
+use HyperfExt\Jwt\Exceptions\TokenExpiredException;
+use HyperfExt\Jwt\Exceptions\TokenInvalidException;
 
 interface PayloadValidatorInterface
 {
     /**
      * Perform some checks on the value.
-     * @throws \HyperfExt\Jwt\Exceptions\TokenInvalidException
-     * @throws \HyperfExt\Jwt\Exceptions\TokenExpiredException
+     * @throws TokenInvalidException
+     * @throws TokenExpiredException
      */
     public function check(Collection $value, bool $ignoreExpired = false): Collection;
 

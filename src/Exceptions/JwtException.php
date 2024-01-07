@@ -8,14 +8,10 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\Exceptions;
 
-use Exception;
-
-class JwtException extends Exception
+class JwtException extends \Exception
 {
-    /**
-     * {@inheritdoc}
-     */
     protected $message = 'An error occurred';
 }

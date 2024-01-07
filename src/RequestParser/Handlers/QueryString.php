@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt\RequestParser\Handlers;
 
 use HyperfExt\Jwt\Contracts\RequestParser\HandlerInterface as ParserContract;
@@ -19,7 +20,7 @@ class QueryString implements ParserContract
 
     public function parse(ServerRequestInterface $request): ?string
     {
-        $data = data_get($request->getQueryParams(), $this->key);
+        $data = \Hyperf\Collection\data_get($request->getQueryParams(), $this->key);
         return empty($data) === null ? null : (string) $data;
     }
 }

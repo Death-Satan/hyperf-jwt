@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt;
 
 use Hyperf\Utils\Arr;
@@ -22,28 +23,28 @@ class Manager implements ManagerInterface
     /**
      * The JWT codec interface.
      *
-     * @var \HyperfExt\Jwt\Contracts\CodecInterface
+     * @var CodecInterface
      */
     protected $codec;
 
     /**
      * The blacklist interface.
      *
-     * @var \HyperfExt\Jwt\Blacklist
+     * @var Blacklist
      */
     protected $blacklist;
 
     /**
      * the claim factory.
      *
-     * @var \HyperfExt\Jwt\Claims\Factory
+     * @var ClaimFactory
      */
     protected $claimFactory;
 
     /**
      * the payload factory.
      *
-     * @var \HyperfExt\Jwt\PayloadFactory
+     * @var PayloadFactory
      */
     protected $payloadFactory;
 
@@ -86,7 +87,7 @@ class Manager implements ManagerInterface
     /**
      * Decode a Token and return the Payload.
      *
-     * @throws \HyperfExt\Jwt\Exceptions\TokenBlacklistedException
+     * @throws TokenBlacklistedException
      */
     public function decode(Token $token, bool $checkBlacklist = true, bool $ignoreExpired = false): Payload
     {
@@ -102,8 +103,8 @@ class Manager implements ManagerInterface
     /**
      * Refresh a Token and return a new Token.
      *
-     * @throws \HyperfExt\Jwt\Exceptions\TokenBlacklistedException
-     * @throws \HyperfExt\Jwt\Exceptions\JwtException
+     * @throws TokenBlacklistedException
+     * @throws JwtException
      */
     public function refresh(Token $token, bool $forceForever = false, array $customClaims = []): Token
     {
@@ -123,7 +124,7 @@ class Manager implements ManagerInterface
     /**
      * Invalidate a Token by adding it to the blacklist.
      *
-     * @throws \HyperfExt\Jwt\Exceptions\JwtException
+     * @throws JwtException
      */
     public function invalidate(Token $token, bool $forceForever = false): bool
     {
@@ -204,14 +205,12 @@ class Manager implements ManagerInterface
     /**
      * Build the claims to go into the refreshed token.
      *
-     * @param \HyperfExt\Jwt\Payload $payload
-     *
      * @return array
      */
     protected function buildRefreshClaims(Payload $payload)
     {
         // Get the claims to be persisted from the payload
-        $persistentClaims = Arr::only($payload->toArray(), $this->persistentClaims);
+        $persistentClaims = \Hyperf\Collection\Arr::only($payload->toArray(), $this->persistentClaims);
 
         // persist the relevant claims
         return array_merge(

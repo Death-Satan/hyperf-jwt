@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  eric@zhu.email
  * @license  https://github.com/hyperf-ext/jwt/blob/master/LICENSE
  */
+
 namespace HyperfExt\Jwt;
 
 use Hyperf\Contract\ConfigInterface;
@@ -38,7 +39,7 @@ class ManagerFactory
         $claimFactory = $this->resolverClaimFactory();
         $payloadFactory = $this->resolverPayloadFactory($claimFactory);
 
-        return make(Manager::class, compact('codec', 'blacklist', 'claimFactory', 'payloadFactory'))
+        return \Hyperf\Support\make(Manager::class, compact('codec', 'blacklist', 'claimFactory', 'payloadFactory'))
             ->setBlacklistEnabled($this->config['blacklist_enabled']);
     }
 
@@ -50,19 +51,19 @@ class ManagerFactory
         if (! empty($keys)) {
             $keys['passphrase'] = empty($keys['passphrase']) ? null : base64_decode($keys['passphrase']);
         }
-        return make(Codec::class, compact('secret', 'algo', 'keys'));
+        return \Hyperf\Support\make(Codec::class, compact('secret', 'algo', 'keys'));
     }
 
     private function resolveBlacklist(): Blacklist
     {
         $storageClass = $this->config['blacklist_storage'] ?? HyperfCache::class;
-        $storage = make($storageClass, [
+        $storage = \Hyperf\Support\make($storageClass, [
             'tag' => 'jwt.default',
         ]);
         $gracePeriod = $this->config['blacklist_grace_period'];
         $refreshTtl = $this->config['refresh_ttl'];
 
-        return make(Blacklist::class, compact('storage', 'gracePeriod', 'refreshTtl'));
+        return \Hyperf\Support\make(Blacklist::class, compact('storage', 'gracePeriod', 'refreshTtl'));
     }
 
     private function resolverClaimFactory(): ClaimFactory
@@ -71,12 +72,12 @@ class ManagerFactory
         $refreshTtl = $this->config['refresh_ttl'];
         $leeway = $this->config['leeway'];
 
-        return make(ClaimFactory::class, compact('ttl', 'refreshTtl', 'leeway'));
+        return \Hyperf\Support\make(ClaimFactory::class, compact('ttl', 'refreshTtl', 'leeway'));
     }
 
     private function resolverPayloadFactory(ClaimFactory $claimFactory): PayloadFactory
     {
-        return make(PayloadFactory::class, compact('claimFactory'))
+        return \Hyperf\Support\make(PayloadFactory::class, compact('claimFactory'))
             ->setTtl($this->config['ttl']);
     }
 }
