@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace HyperfExt\Jwt\Claims;
 
 use Hyperf\Context\ApplicationContext;
-use Hyperf\Utils\Str;
 use HyperfExt\Jwt\Contracts\ClaimInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -161,7 +160,7 @@ class Factory
 
     public function iss(): string
     {
-        return \Hyperf\Context\ApplicationContext::getContainer()->get(ServerRequestInterface::class)->url();
+        return ApplicationContext::getContainer()->get(ServerRequestInterface::class)->url();
     }
 
     public function iat(): int

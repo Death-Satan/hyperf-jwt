@@ -12,10 +12,10 @@ declare(strict_types=1);
 namespace HyperfTest;
 
 use FastRoute\Dispatcher;
+use Hyperf\Context\Context;
 use Hyperf\HttpMessage\Server\Request;
 use Hyperf\HttpServer\Request as HttpServerRequest;
 use Hyperf\HttpServer\Router\Dispatched;
-use Hyperf\Context\Context;
 use HyperfExt\Jwt\RequestParser\Handlers\AuthHeaders;
 use HyperfExt\Jwt\RequestParser\Handlers\Cookies;
 use HyperfExt\Jwt\RequestParser\Handlers\InputSource;

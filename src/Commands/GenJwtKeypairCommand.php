@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace HyperfExt\Jwt\Commands;
 
-use Hyperf\Utils\Str;
-
 class GenJwtKeypairCommand extends AbstractGenCommand
 {
     protected ?string $name = 'gen:jwt-keypair';

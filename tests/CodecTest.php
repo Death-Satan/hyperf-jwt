@@ -239,6 +239,8 @@ class CodecTest extends AbstractTestCase
     }
 
     /**
+     * @param mixed $secret
+     * @param mixed $algo
      * @return \HyperfExt\Jwt\Codec|\PHPUnit\Framework\MockObject\MockObject
      */
     public function getCodec($secret, $algo, array $keys = [])

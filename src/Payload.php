@@ -11,17 +11,18 @@ declare(strict_types=1);
 
 namespace HyperfExt\Jwt;
 
-use Hyperf\Context\ApplicationContext;
 use Hyperf\Collection\Arr;
+use Hyperf\Context\ApplicationContext;
 use Hyperf\Contract\Arrayable;
 use Hyperf\Contract\Jsonable;
 use HyperfExt\Jwt\Claims\AbstractClaim;
 use HyperfExt\Jwt\Claims\Collection;
 use HyperfExt\Jwt\Contracts\PayloadValidatorInterface;
 use HyperfExt\Jwt\Exceptions\PayloadException;
+
 use function Hyperf\Support\value;
 
-class Payload implements \ArrayAccess, \Hyperf\Contract\Arrayable, \Countable, \Hyperf\Contract\Jsonable, \JsonSerializable
+class Payload implements \ArrayAccess, Arrayable, \Countable, Jsonable, \JsonSerializable
 {
     /**
      * The collection of claims.
@@ -40,7 +41,7 @@ class Payload implements \ArrayAccess, \Hyperf\Contract\Arrayable, \Countable, \
      */
     public function __construct(Collection $claims, bool $ignoreExpired = false)
     {
-        $this->validator = \Hyperf\Context\ApplicationContext::getContainer()->get(PayloadValidatorInterface::class);
+        $this->validator = ApplicationContext::getContainer()->get(PayloadValidatorInterface::class);
         $this->claims = $this->validator->check($claims, $ignoreExpired);
     }
 
@@ -203,8 +204,6 @@ class Payload implements \ArrayAccess, \Hyperf\Contract\Arrayable, \Countable, \
      * Get an item at a given offset.
      *
      * @param mixed $key
-     *
-     * @return mixed
      */
     public function offsetGet($key): mixed
     {
@@ -214,12 +213,9 @@ class Payload implements \ArrayAccess, \Hyperf\Contract\Arrayable, \Countable, \
     /**
      * Don't allow changing the payload as it should be immutable.
      *
-     * @param mixed $key
-     * @param mixed $value
-     *
      * @throws PayloadException
      */
-    public function offsetSet(mixed $key,mixed $value): void
+    public function offsetSet(mixed $key, mixed $value): void
     {
         throw new PayloadException('The payload is immutable');
     }

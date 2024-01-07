@@ -16,9 +16,8 @@ use Hyperf\Contract\Arrayable;
 use Hyperf\Contract\Jsonable;
 use HyperfExt\Jwt\Contracts\ClaimInterface;
 use HyperfExt\Jwt\Contracts\ManagerInterface;
-use JsonSerializable;
 
-abstract class AbstractClaim implements ClaimInterface, Arrayable, Jsonable, JsonSerializable
+abstract class AbstractClaim implements ClaimInterface, Arrayable, Jsonable, \JsonSerializable
 {
     /**
      * The claim name.
@@ -148,6 +147,6 @@ abstract class AbstractClaim implements ClaimInterface, Arrayable, Jsonable, Jso
         if (! empty($this->factory)) {
             return $this->factory;
         }
-        return $this->factory = \Hyperf\Context\ApplicationContext::getContainer()->get(ManagerInterface::class)->getClaimFactory();
+        return $this->factory = ApplicationContext::getContainer()->get(ManagerInterface::class)->getClaimFactory();
     }
 }

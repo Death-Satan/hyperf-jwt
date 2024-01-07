@@ -31,7 +31,7 @@ class Token
      */
     public function __construct(string $value)
     {
-        $this->validator = \Hyperf\Context\ApplicationContext::getContainer()->get(TokenValidatorInterface::class);
+        $this->validator = ApplicationContext::getContainer()->get(TokenValidatorInterface::class);
         $this->value = (string) $this->validator->check($value);
     }
 

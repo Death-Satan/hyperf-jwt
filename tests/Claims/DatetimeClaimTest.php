@@ -54,7 +54,7 @@ class DatetimeClaimTest extends AbstractTestCase
         $testCarbonCopy = clone $testCarbon;
 
         $this->assertInstanceOf(Carbon::class, $testCarbon);
-        $this->assertInstanceOf(\Datetime::class, $testCarbon);
+        $this->assertInstanceOf(\DateTime::class, $testCarbon);
         $this->assertInstanceOf(\DatetimeInterface::class, $testCarbon);
 
         $claimsDatetime = [

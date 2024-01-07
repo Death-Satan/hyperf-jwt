@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace HyperfExt\Jwt;
 
-use Hyperf\Utils\Arr;
 use HyperfExt\Jwt\Claims\Factory as ClaimFactory;
 use HyperfExt\Jwt\Contracts\CodecInterface;
 use HyperfExt\Jwt\Contracts\ManagerInterface;
