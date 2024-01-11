@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace HyperfExt\Jwt\Claims;
 
-use Hyperf\Collection\Collection;
+use Hyperf\Collection\Collection as Base;
 
-class Collection extends Collection
+class Collection extends Base
 {
     /**
      * Create a new collection.
