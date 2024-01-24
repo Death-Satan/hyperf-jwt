@@ -232,7 +232,7 @@ class Codec implements CodecInterface
 
         try {
             foreach ($payload as $key => $value) {
-                $this->addClaim($builder, $key, $value);
+                $builder = $this->addClaim($builder, $key, $value);
             }
             return $builder->getToken($this->config->signer(), $this->config->signingKey())->toString();
         } catch (\Exception $e) {
@@ -289,28 +289,21 @@ class Codec implements CodecInterface
     {
         switch ($key) {
             case RegisteredClaims::ID:
-                $builder->identifiedBy((string) $value);
-                break;
+                return $builder->identifiedBy((string) $value);
             case RegisteredClaims::EXPIRATION_TIME:
-                $builder->expiresAt(\DateTimeImmutable::createFromFormat('U', (string) $value));
-                break;
+                return $builder->expiresAt(\DateTimeImmutable::createFromFormat('U', (string) $value));
             case RegisteredClaims::NOT_BEFORE:
-                $builder->canOnlyBeUsedAfter(\DateTimeImmutable::createFromFormat('U', (string) $value));
-                break;
+                return $builder->canOnlyBeUsedAfter(\DateTimeImmutable::createFromFormat('U', (string) $value));
             case RegisteredClaims::ISSUED_AT:
-                $builder->issuedAt(\DateTimeImmutable::createFromFormat('U', (string) $value));
-                break;
+                return $builder->issuedAt(\DateTimeImmutable::createFromFormat('U', (string) $value));
             case RegisteredClaims::ISSUER:
-                $builder->issuedBy((string) $value);
-                break;
+                return $builder->issuedBy((string) $value);
             case RegisteredClaims::AUDIENCE:
-                $builder->permittedFor((string) $value);
-                break;
+                return $builder->permittedFor((string) $value);
             case RegisteredClaims::SUBJECT:
-                $builder->relatedTo((string) $value);
-                break;
+                return $builder->relatedTo((string) $value);
             default:
-                $builder->withClaim($key, $value);
+                return $builder->withClaim($key, $value);
         }
     }
 
