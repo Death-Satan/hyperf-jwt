@@ -183,8 +183,6 @@ class BlacklistTest extends AbstractTestCase
     /**
      * @test
      * @dataProvider blacklist_provider
-     *
-     * @param mixed $result
      */
     public function itShouldCheckWhetherATokenHasNotBeenBlacklisted(mixed $result): void
     {

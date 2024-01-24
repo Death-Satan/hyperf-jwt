@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace HyperfExt\Jwt;
 
+use Hyperf\Collection\Arr;
 use HyperfExt\Jwt\Claims\Factory as ClaimFactory;
 use HyperfExt\Jwt\Contracts\CodecInterface;
 use HyperfExt\Jwt\Contracts\ManagerInterface;
@@ -209,7 +210,7 @@ class Manager implements ManagerInterface
     protected function buildRefreshClaims(Payload $payload)
     {
         // Get the claims to be persisted from the payload
-        $persistentClaims = \Hyperf\Collection\Arr::only($payload->toArray(), $this->persistentClaims);
+        $persistentClaims = Arr::only($payload->toArray(), $this->persistentClaims);
 
         // persist the relevant claims
         return array_merge(

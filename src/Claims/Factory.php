@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace HyperfExt\Jwt\Claims;
 
 use Hyperf\Context\ApplicationContext;
+use Hyperf\Stringable\Str;
 use HyperfExt\Jwt\Contracts\ClaimInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -180,6 +181,6 @@ class Factory
 
     public function jti(): string
     {
-        return \Hyperf\Stringable\Str::random(16);
+        return Str::random(16);
     }
 }

@@ -31,7 +31,7 @@ Swoole\Runtime::enableCoroutine(true);
 
 require_once dirname(__FILE__, 2) . '/vendor/autoload.php';
 
-//AnnotationReader::addGlobalIgnoredName('mixin');
+// AnnotationReader::addGlobalIgnoredName('mixin');
 
 ClassLoader::init();
 

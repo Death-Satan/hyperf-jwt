@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace HyperfExt\Jwt;
 
+use Hyperf\Collection\Arr;
+use Hyperf\Collection\Collection;
 use HyperfExt\Jwt\Contracts\CodecInterface;
 use HyperfExt\Jwt\Exceptions\JwtException;
 use HyperfExt\Jwt\Exceptions\TokenInvalidException;
@@ -196,7 +198,7 @@ class Codec implements CodecInterface
      */
     public function getPublicKey()
     {
-        return \Hyperf\Collection\Arr::get($this->keys, 'public');
+        return Arr::get($this->keys, 'public');
     }
 
     /**
@@ -207,7 +209,7 @@ class Codec implements CodecInterface
      */
     public function getPrivateKey()
     {
-        return \Hyperf\Collection\Arr::get($this->keys, 'private');
+        return Arr::get($this->keys, 'private');
     }
 
     /**
@@ -216,7 +218,7 @@ class Codec implements CodecInterface
      */
     public function getPassphrase(): ?string
     {
-        return \Hyperf\Collection\Arr::get($this->keys, 'passphrase');
+        return Arr::get($this->keys, 'passphrase');
     }
 
     /**
@@ -256,7 +258,7 @@ class Codec implements CodecInterface
         if (! $this->config->validator()->validate($jwt, ...$this->config->validationConstraints())) {
             throw new TokenInvalidException('Token Signature could not be verified.');
         }
-        return (new \Hyperf\Collection\Collection($jwt->claims()->all()))->map(function ($claim) {
+        return (new Collection($jwt->claims()->all()))->map(function ($claim) {
             if (is_a($claim, \DateTimeImmutable::class)) {
                 return $claim->getTimestamp();
             }

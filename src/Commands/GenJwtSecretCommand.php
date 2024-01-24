@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace HyperfExt\Jwt\Commands;
 
+use Hyperf\Stringable\Str;
+
 class GenJwtSecretCommand extends AbstractGenCommand
 {
     protected ?string $name = 'gen:jwt-secret';
@@ -31,7 +33,7 @@ class GenJwtSecretCommand extends AbstractGenCommand
             return;
         }
 
-        if (\Hyperf\Stringable\Str::contains(file_get_contents($path), 'JWT_SECRET') === false) {
+        if (Str::contains(file_get_contents($path), 'JWT_SECRET') === false) {
             file_put_contents($path, "\nJWT_SECRET={$key}\n", FILE_APPEND);
         } else {
             if ($this->getOption('always-no')) {

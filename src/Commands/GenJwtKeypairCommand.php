@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace HyperfExt\Jwt\Commands;
 
+use Hyperf\Stringable\Str;
+
 class GenJwtKeypairCommand extends AbstractGenCommand
 {
     protected ?string $name = 'gen:jwt-keypair';
@@ -47,7 +49,7 @@ class GenJwtKeypairCommand extends AbstractGenCommand
             return;
         }
 
-        if (\Hyperf\Stringable\Str::contains(file_get_contents($path), ['JWT_PRIVATE_KEY', 'JWT_PUBLIC_KEY', 'JWT_PASSPHRASE'])) {
+        if (Str::contains(file_get_contents($path), ['JWT_PRIVATE_KEY', 'JWT_PUBLIC_KEY', 'JWT_PASSPHRASE'])) {
             if ($this->getOption('always-no')) {
                 $this->comment('The key pair or some part of it already exists. Skipping...');
                 return;
@@ -72,10 +74,10 @@ class GenJwtKeypairCommand extends AbstractGenCommand
 
     protected function writeEnv(string $path, string $name, ?string $value, bool $force)
     {
-        $envKey = 'JWT_' . \Hyperf\Stringable\Str::upper(\Hyperf\Stringable\Str::snake($name));
+        $envKey = 'JWT_' . Str::upper(Str::snake($name));
         $envValue = empty($value) ? '(null)' : '"' . str_replace("\n", '\\n', $value) . '"';
 
-        if (\Hyperf\Stringable\Str::contains(file_get_contents($path), $envKey) === false) {
+        if (Str::contains(file_get_contents($path), $envKey) === false) {
             file_put_contents($path, "{$envKey}={$envValue}\n", FILE_APPEND);
         } elseif ($force) {
             file_put_contents($path, preg_replace(
