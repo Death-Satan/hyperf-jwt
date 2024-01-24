@@ -47,7 +47,7 @@ class BlacklistTest extends AbstractTestCase
     }
 
     /** @test */
-    public function itShouldAddAValidTokenToTheBlacklist()
+    public function itShouldAddAValidTokenToTheBlacklist(): void
     {
         $claims = [
             new Subject(1),
@@ -64,20 +64,18 @@ class BlacklistTest extends AbstractTestCase
 
         $refreshTtl = 1209660;
 
-        $this->storage->shouldReceive('get')
+        $this->storage->expects('get')
             ->with('foo')
-            ->once()
-            ->andReturn([]);
+            ->andReturns([]);
 
-        $this->storage->shouldReceive('add')
-            ->with('foo', ['valid_until' => $this->testNowTimestamp], $refreshTtl + 60)
-            ->once();
+        $this->storage->expects('add')
+            ->with('foo', ['valid_until' => $this->testNowTimestamp], $refreshTtl + 60);
 
         $this->assertTrue($this->blacklist->setRefreshTtl($refreshTtl)->add($payload));
     }
 
     /** @test */
-    public function itShouldAddATokenWithNoExpToTheBlacklistForever()
+    public function itShouldAddATokenWithNoExpToTheBlacklistForever(): void
     {
         $claims = [
             new Subject(1),
@@ -90,13 +88,13 @@ class BlacklistTest extends AbstractTestCase
 
         $payload = new Payload($collection);
 
-        $this->storage->shouldReceive('forever')->with('foo', 'forever')->once();
+        $this->storage->expects('forever')->with('foo', 'forever');
 
         $this->assertTrue($this->blacklist->add($payload));
     }
 
     /** @test */
-    public function itShouldReturnTrueWhenAddingAnExpiredTokenToTheBlacklist()
+    public function itShouldReturnTrueWhenAddingAnExpiredTokenToTheBlacklist(): void
     {
         $claims = [
             new Subject(1),
@@ -112,20 +110,18 @@ class BlacklistTest extends AbstractTestCase
 
         $refreshTtl = 1209660;
 
-        $this->storage->shouldReceive('get')
+        $this->storage->expects('get')
             ->with('foo')
-            ->once()
-            ->andReturn([]);
+            ->andReturns([]);
 
-        $this->storage->shouldReceive('add')
-            ->with('foo', ['valid_until' => $this->testNowTimestamp], $refreshTtl + 60)
-            ->once();
+        $this->storage->expects('add')
+            ->with('foo', ['valid_until' => $this->testNowTimestamp], $refreshTtl + 60);
 
         $this->assertTrue($this->blacklist->setRefreshTtl($refreshTtl)->add($payload));
     }
 
     /** @test */
-    public function itShouldReturnTrueEarlyWhenAddingAnItemAndItAlreadyExists()
+    public function itShouldReturnTrueEarlyWhenAddingAnItemAndItAlreadyExists(): void
     {
         $claims = [
             new Subject(1),
@@ -141,12 +137,11 @@ class BlacklistTest extends AbstractTestCase
 
         $refreshTtl = 1209660;
 
-        $this->storage->shouldReceive('get')
+        $this->storage->expects('get')
             ->with('foo')
-            ->once()
-            ->andReturn(['valid_until' => $this->testNowTimestamp]);
+            ->andReturns(['valid_until' => $this->testNowTimestamp]);
 
-        $this->storage->shouldReceive('add')
+        $this->storage->allows('add')
             ->with('foo', ['valid_until' => $this->testNowTimestamp], $refreshTtl + 60)
             ->never();
 
@@ -169,12 +164,12 @@ class BlacklistTest extends AbstractTestCase
 
         $payload = new Payload($collection);
 
-        $this->storage->shouldReceive('get')->with('foobar')->once()->andReturn(['valid_until' => $this->testNowTimestamp]);
+        $this->storage->expects('get')->with('foobar')->andReturns(['valid_until' => $this->testNowTimestamp]);
 
         $this->assertTrue($this->blacklist->has($payload));
     }
 
-    public function blacklist_provider()
+    public static function blacklist_provider(): array
     {
         return [
             [null],
@@ -191,7 +186,7 @@ class BlacklistTest extends AbstractTestCase
      *
      * @param mixed $result
      */
-    public function itShouldCheckWhetherATokenHasNotBeenBlacklisted($result)
+    public function itShouldCheckWhetherATokenHasNotBeenBlacklisted(mixed $result): void
     {
         $claims = [
             new Subject(1),
@@ -206,12 +201,12 @@ class BlacklistTest extends AbstractTestCase
 
         $payload = new Payload($collection);
 
-        $this->storage->shouldReceive('get')->with('foobar')->once()->andReturn($result);
+        $this->storage->expects('get')->with('foobar')->andReturns($result);
         $this->assertFalse($this->blacklist->has($payload));
     }
 
     /** @test */
-    public function itShouldCheckWhetherATokenHasBeenBlacklistedForever()
+    public function itShouldCheckWhetherATokenHasBeenBlacklistedForever(): void
     {
         $claims = [
             new Subject(1),
@@ -225,13 +220,13 @@ class BlacklistTest extends AbstractTestCase
 
         $payload = new Payload($collection);
 
-        $this->storage->shouldReceive('get')->with('foobar')->once()->andReturn('forever');
+        $this->storage->expects('get')->with('foobar')->andReturns('forever');
 
         $this->assertTrue($this->blacklist->has($payload));
     }
 
     /** @test */
-    public function itShouldCheckWhetherATokenHasBeenBlacklistedWhenTheTokenIsNotBlacklisted()
+    public function itShouldCheckWhetherATokenHasBeenBlacklistedWhenTheTokenIsNotBlacklisted(): void
     {
         $claims = [
             new Subject(1),
@@ -245,13 +240,13 @@ class BlacklistTest extends AbstractTestCase
 
         $payload = new Payload($collection);
 
-        $this->storage->shouldReceive('get')->with('foobar')->once()->andReturn(null);
+        $this->storage->expects('get')->with('foobar')->andReturns(null);
 
         $this->assertFalse($this->blacklist->has($payload));
     }
 
     /** @test */
-    public function itShouldRemoveATokenFromTheBlacklist()
+    public function itShouldRemoveATokenFromTheBlacklist(): void
     {
         $claims = [
             new Subject(1),
@@ -265,12 +260,12 @@ class BlacklistTest extends AbstractTestCase
 
         $payload = new Payload($collection);
 
-        $this->storage->shouldReceive('destroy')->with('foobar')->andReturn(true);
+        $this->storage->allows('destroy')->with('foobar')->andReturns(true);
         $this->assertTrue($this->blacklist->remove($payload));
     }
 
     /** @test */
-    public function itShouldSetACustomUniqueKeyForTheBlacklist()
+    public function itShouldSetACustomUniqueKeyForTheBlacklist(): void
     {
         $claims = [
             new Subject(1),
@@ -284,7 +279,7 @@ class BlacklistTest extends AbstractTestCase
 
         $payload = new Payload($collection);
 
-        $this->storage->shouldReceive('get')->with(1)->once()->andReturn(['valid_until' => $this->testNowTimestamp]);
+        $this->storage->expects('get')->with(1)->andReturns(['valid_until' => $this->testNowTimestamp]);
 
         $this->assertTrue($this->blacklist->setKey('sub')->has($payload));
         $this->assertSame(1, $this->blacklist->getKey($payload));
@@ -293,19 +288,19 @@ class BlacklistTest extends AbstractTestCase
     /** @test */
     public function itShouldEmptyTheBlacklist()
     {
-        $this->storage->shouldReceive('flush');
+        $this->storage->allows('flush');
         $this->assertTrue($this->blacklist->clear());
     }
 
     /** @test */
-    public function itShouldSetAndGetTheBlacklistGracePeriod()
+    public function itShouldSetAndGetTheBlacklistGracePeriod(): void
     {
         $this->assertInstanceOf(Blacklist::class, $this->blacklist->setGracePeriod(15));
         $this->assertSame(15, $this->blacklist->getGracePeriod());
     }
 
     /** @test */
-    public function itShouldSetAndGetTheBlacklistRefreshTtl()
+    public function itShouldSetAndGetTheBlacklistRefreshTtl(): void
     {
         $this->assertInstanceOf(Blacklist::class, $this->blacklist->setRefreshTtl(15));
         $this->assertSame(15, $this->blacklist->getRefreshTtl());

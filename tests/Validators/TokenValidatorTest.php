@@ -40,7 +40,7 @@ class TokenValidatorTest extends AbstractTestCase
         $this->assertTrue($this->validator->isValid('one.two.three'));
     }
 
-    public function dataProviderMalformedTokens()
+    public static function dataProviderMalformedTokens()
     {
         return [
             ['one.two.'],
@@ -77,7 +77,7 @@ class TokenValidatorTest extends AbstractTestCase
         $this->validator->check($token);
     }
 
-    public function dataProviderTokensWithWrongSegmentsNumber()
+    public static function dataProviderTokensWithWrongSegmentsNumber()
     {
         return [
             ['one.two'],
